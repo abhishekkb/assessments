@@ -9,8 +9,6 @@ import java.util.UUID;
 
 import org.apache.log4j.Logger;
 
-import com.finra.restapi.service.DocumentService;
-
 public class DocumentMetadata implements Serializable {
     
     static final long serialVersionUID = 7283287076019483950L;

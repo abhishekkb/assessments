@@ -66,11 +66,48 @@ public class DocumentDaoImpl implements DocumentDao {
     
 	@Override
 	public List<DocumentMetadata> findByPersonNameBeforedateAfterdate(String personName, Date before, Date after) {
-		// TODO Auto-generated method stub
-		return null;
+        try {
+            return findInFileSystem(personName,before, after);
+        } catch (IOException e) {
+            String message = "Error while finding document, person name: " + personName + ", before date:" + before + " after date: " + after;
+            LOG.error(message, e);
+            throw new RuntimeException(message, e);
+        }
 	}
     
-    @Override
+    private List<DocumentMetadata> findInFileSystem(String personName, Date before, Date after) throws IOException{
+    	//TODO check before greater than after date
+    		//if true
+		    	List<String> uuidList = getUuidList();
+		        List<DocumentMetadata> metadataList = new ArrayList<DocumentMetadata>(uuidList.size());
+		        for (String uuid : uuidList) {
+		            DocumentMetadata metadata = loadMetadataFromFileSystem(uuid);         
+		            if(isBeforeDateAndAfteDate(metadata, personName, before, after)) {
+		                metadataList.add(metadata);
+		            }
+		        }
+		        return metadataList;
+		    //else
+		        // find in files before date, or find in files after date
+		        //isAfterDateOrBeforeDDate
+	}
+
+	private boolean isBeforeDateAndAfteDate(DocumentMetadata metadata, String personName, Date beforeDate, Date afterDate) {
+		if(metadata==null) {
+            return false;
+        }
+        boolean match = true;
+        if(personName!=null) {
+            match = (personName.equals(metadata.getPersonName()));
+        }
+        if(match && afterDate!=null && beforeDate!=null) {
+        	Date date = metadata.getDocumentDate();
+            match = date.after(afterDate) && date.before(beforeDate);
+        }
+        return match;
+	}
+
+	@Override
     public Document load(String uuid) {
         try {
             return loadFromFileSystem(uuid);
@@ -94,6 +131,7 @@ public class DocumentDaoImpl implements DocumentDao {
         }
         return metadataList;
     }
+    
 
     private boolean isMatched(DocumentMetadata metadata, String personName, Date date) {
         if(metadata==null) {
@@ -203,6 +241,22 @@ public class DocumentDaoImpl implements DocumentDao {
     private void createDirectory(String path) {
         File file = new File(path);
         file.mkdirs();
+    }
+    
+    public List<DocumentMetadata> getRecentList(Date curr) throws IOException{
+    	
+    	List<String> uuidList = getUuidList();
+    	List<DocumentMetadata> metadataList = new ArrayList<DocumentMetadata>(uuidList.size());
+        for (String uuid : uuidList) {
+            DocumentMetadata metadata;
+				metadata = loadMetadataFromFileSystem(uuid);
+				long timeDifferenceMilliseconds = curr.getTime() - metadata.getDocumentDate().getTime();
+	            double diffDays = timeDifferenceMilliseconds / (60 * 60 * 1000 * 24);
+	            if(timeDifferenceMilliseconds < 1.000 ) {
+	                metadataList.add(metadata);
+	            }
+        }
+        return metadataList;
     }
 
 }

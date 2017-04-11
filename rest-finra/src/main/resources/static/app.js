@@ -1,5 +1,8 @@
 var app = angular.module('finraApp', []);
 
+var baseUrl = "http://localhost:8182";
+var finra = "/finrarest";
+
 app.directive('fileModel', [ '$parse', function($parse) {
 	return {
 		restrict : 'A',
@@ -18,7 +21,7 @@ app.directive('fileModel', [ '$parse', function($parse) {
 
 app.service('DocumentService', [ '$http', '$rootScope', function($http, $rootScope) {
 	this.search = function(name, date) {
-		$http.get("http://localhost:8181/finrarest/documents", {
+		$http.get(baseUrl + finra + "/documents", {
 			params : {
 				person : name,
 				date : date
@@ -55,14 +58,14 @@ app.controller('UploadCtrl', [ '$scope', 'fileUpload',
 				var name = $scope.name;
 				var date = $scope.date;
 				console.log('file is ' + JSON.stringify(file));
-				var uploadUrl = "/finrarest/upload";
+				var uploadUrl = baseUrl + finra + "/upload";
 				fileUpload.uploadFileToUrl(uploadUrl, file, name, date);
 			};
 		} ]);
 
 app.controller('FinraCtrl', function($scope, $http) {
 	$scope.search = function(name, date) {
-		$http.get("http://localhost:8181/finrarest/documents", {
+		$http.get(baseUrl + finra + "/documents", {
 			params : {
 				person : name,
 				date : date
@@ -74,7 +77,7 @@ app.controller('FinraCtrl', function($scope, $http) {
 });
 
 app.run(function($rootScope, $http) {
-	$http.get("http://localhost:8181/finrarest/documents").success(
+	$http.get(baseUrl + finra + "/documents").success(
 			function(response) {
 				$rootScope.metadataList = response;
 			});

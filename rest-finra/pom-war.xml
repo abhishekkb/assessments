@@ -8,7 +8,7 @@
     <version>0.1.0</version>
     
     <packaging>war</packaging>
-    <description>A simple REST document archive</description>
+    <description>A simple REST document archiving service</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>

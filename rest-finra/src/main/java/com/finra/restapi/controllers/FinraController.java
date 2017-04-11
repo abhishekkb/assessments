@@ -44,6 +44,14 @@ public class FinraController {
     @Autowired
     DocumentService documentService;
 
+//    @RequestMapping("/hello")
+//    @ResponseBody
+//    public String hello(){
+//    	System.out.println("dsafdsf");
+//    	return "{a:'asdfds'}";
+//    }
+    
+    
     /*
      * /finrarest/upload?file={file}&person={person}&date={date} [POST]
      */
@@ -112,7 +120,7 @@ public class FinraController {
         return documentService;
     }
 
-    public void setArchiveService(DocumentService documentService) {
+    public void setDocumentService(DocumentService documentService) {
         this.documentService = documentService;
     }
 

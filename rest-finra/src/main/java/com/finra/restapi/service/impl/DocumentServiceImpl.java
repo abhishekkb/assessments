@@ -12,7 +12,7 @@ import com.finra.restapi.service.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service("archiveService")
+@Service("documentService")
 public class DocumentServiceImpl implements DocumentService, Serializable {
 
     private static final long serialVersionUID = 8119784722798361327L;
@@ -52,8 +52,7 @@ public class DocumentServiceImpl implements DocumentService, Serializable {
 
 	@Override
 	public List<DocumentMetadata> findDocumentsByCriteria(String person, Date before, Date after) {
-		// TODO Auto-generated method stub
-		return null;
+		return getDocumentDao().findByPersonNameBeforedateAfterdate(person, before, after);
 	}
 
 
