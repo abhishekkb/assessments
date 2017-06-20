@@ -58,7 +58,7 @@ public class FindCharactersToMakeTwoStringsAnagrams {
 		Map<String, Integer> map_a = getMapWithDuplicateCharCount(str_a);
 		Map<String, Integer> map_b = getMapWithDuplicateCharCount(str_b);
 		
-		String extra = "To String A - ";
+		String extra = "To String B - ";
 		
 		Iterator<Entry<String, Integer>> it_a = map_a.entrySet().iterator();
 		while(it_a.hasNext()){
@@ -81,7 +81,7 @@ public class FindCharactersToMakeTwoStringsAnagrams {
 			}
 		}
 		
-		extra += " ;; To String B - ";
+		extra += " ;; To String A - ";
 		
 		Iterator<Entry<String, Integer>> it_b = map_b.entrySet().iterator();
 		while(it_b.hasNext()){
@@ -166,11 +166,11 @@ public class FindCharactersToMakeTwoStringsAnagrams {
 				int c = Math.abs(cc.getA()-cc.getB());
 				if(aa<bb){
 					for(int i=0;i<c;i++){
-						extra_b += key;
+						extra_a += key;
 					}
 				}else{
 					for(int i=0;i<c;i++){
-						extra_a += key;
+						extra_b += key;
 					}
 				}
 			}
