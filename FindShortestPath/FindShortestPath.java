@@ -31,18 +31,18 @@ public class FindShortestPath {
 
     }
 
-    public static boolean canMoveRight(int[][] m, int mc, int i, int j) {
-        if(i>=mc-1){
+    public static boolean canMoveRight(int[][] m, int mc, int x, int y) {
+        if(x>=mc-1){
             return false;
         } else {
-            return !(m[i+1][j] == 1);
+            return !(m[x+1][y] == 1);
         }
     }
-    public static boolean canMoveDown(int[][] m, int mr, int i, int j) {
-        if(j>=mr-1){
+    public static boolean canMoveDown(int[][] m, int mr, int x, int y) {
+        if(y>=mr-1){
             return false;
         } else {
-            return !(m[i][j+1] == 1);
+            return !(m[x][y+1] == 1);
         }
     }
 }
