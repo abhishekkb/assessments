@@ -1,7 +1,8 @@
-package com.example.assessmentdemo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Write a function given array A consisting of N integers, returns the maximum sum of two numbers whose digits add up to an equal sum. If there are no two numbers whose digits have an equal sum, the function should return -1.
@@ -27,6 +28,10 @@ public class MaxOfSumOfTwoNumbers {
         System.out.println("sum = " + getMax1(new int[]{42, 33, 60}));
         System.out.println("sum = " + getMax1(new int[]{51, 32, 43}));
 
+        System.out.println("sum = " + getMax2(new int[]{51, 71, 17, 42}));
+        System.out.println("sum = " + getMax2(new int[]{42, 33, 60}));
+        System.out.println("sum = " + getMax2(new int[]{51, 32, 43}));
+
     }
 
     static int getMax1(int[] a){
@@ -45,6 +50,44 @@ public class MaxOfSumOfTwoNumbers {
             }
         }
         return max;
+    }
+
+    static int getMax2(int[] a) {
+        int max=-1;
+        int n = a.length;
+        // sum -> i, j, k ... (indexes of elements in array a)
+        Map<Integer, List<Integer>> sums = new HashMap<>();
+        for (int i = 0; i < n; i++) {
+            addToMap(sums, a, i);
+        }
+        for(Map.Entry<Integer, List<Integer>> entry: sums.entrySet()){
+            List<Integer> x = entry.getValue();
+            for (int i = 0; i < x.size(); i++) {
+                for (int j = 1; j < x.size(); j++) {
+                    if(!x.get(i).equals(x.get(j)) && i!=j) {
+                        int temp = a[x.get(i)] + a[x.get(j)];
+                        if (temp > max) {
+                            max = temp;
+                        }
+                    }
+                }
+            }
+        }
+
+
+        return max;
+    }
+
+    static void addToMap(Map<Integer, List<Integer>> sums, int[] a, int i) {
+        int s = getSum(a[i]);
+        List<Integer> l;
+        if(sums.containsKey(s)){
+            l = sums.get(s);
+        } else {
+            l = new ArrayList<>();
+        }
+        l.add(i);
+        sums.put(s, l);
     }
 
     static int getVal1(List<Integer> sums, int[] a, int i){
