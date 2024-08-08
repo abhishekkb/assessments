@@ -1,3 +1,5 @@
+package com.apex.eqp.inventory;
+
 import java.io.*;
 import java.util.*;
 import java.text.*;
@@ -11,15 +13,18 @@ public class ListOfAnagrams {
     public static void main(String[] args) {
         String[] strs = {"tac", "bed", "deb", "dog", "cat"};
 
+        System.out.println(anagrams(strs));
+
     }
 
     /**
      * Given list of String {'tac', 'bed', 'deb', 'dog', 'cat'}, return a Set of String where each list contains all Strings which are anagrams of each other. Two words are anagrams of
      * each other if the letter can be rearranged to make each other.
      * {
-     * {'tac', 'cat'},
-     * {'bed', 'deb'},
-     * {'dog'}// * }
+     *   {'tac', 'cat'},
+     *   {'bed', 'deb'},
+     *   {'dog'}
+     * }
      *
      * @param args
      * @return list of set
@@ -37,14 +42,10 @@ public class ListOfAnagrams {
         return new ArrayList<>(anagrams.values());
     }
 
-    static String sortStringChars(String s) {
-
-        //TODO implement
-        return null;
+    private static String sortStringChars(String s) {
+        char[] chars = s.toCharArray();
+        Arrays.sort(chars);
+        return new String(chars);
     }
 
 }
-
-
-
-
